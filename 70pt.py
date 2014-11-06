@@ -35,7 +35,11 @@ class MyApp:
 		# "Bind" an action to the first button												
 		self.button1.bind("<Button-1>", self.button1Click)
 
-		  
+		     
+		self.up = Button(self.myContainer1)
+		self.up.configure(text="up", background= "green")
+		self.up.grid(row=0,column=0)
+		self.up.bind("<Button-1>", self.button1Click)
 		# This creates the drawpad - no need to change this 
 		drawpad.pack()
 		
@@ -43,15 +47,22 @@ class MyApp:
 		
 	def button1Click(self, event):   
                 # "global" makes sure that we can access our oval and our drawpad
-		global oval
+		#global oval
 		global drawpad
-                x1,y1,x2,y2 = drawpad.coords(player)
+		global player
+		drawpad.move(player,0,-20)
+		global target
 		global targetx1, targety1, targetx2, targety2
-
+		px1,py1,px2,py2 = drawpad.coords(player)   
+	        
+	        
 
 		# Ensure that we are doing our collision detection
 		# After we move our object!
-	
+	        if (px1 > targetx1 and px2 < targetx2) and (py1 > targety1 and py2 < targety2):
+	             drawpad.itemconfig(target, fill = "red")
+	        else:
+	            drawpad.itemconfig(target, fill = "blue") 
 	
 		
 myapp = MyApp(root)
